@@ -3,12 +3,17 @@ import { Playlist } from '../models/playlists';
 const PlaylistRepository = {
 
     async findAll(){
-        return await Playlist.find.exec();
+        return await Playlist
+            .find()
+            .populate('songs', 'name')
+            .exec();
     },
 
     async findById(id){
-        const result = await Playlist.findById(id).exec();
-        return  result != null ? result : undefined; 
+        return await Playlist
+            .findById(id)
+            .populate('songs')
+            .exec();
     }
 
 }

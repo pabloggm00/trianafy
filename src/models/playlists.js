@@ -5,7 +5,7 @@ const { Schema } = mongoose;
 const playlistSchema = ({
     name: String,
     description: String,
-    user_id: String,
+    user_id: Number,
     songs: [{
         type: mongoose.ObjectId,
         ref: 'Song'

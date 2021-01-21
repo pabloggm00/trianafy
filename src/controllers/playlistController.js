@@ -4,7 +4,7 @@ import { PlaylistRepository } from '../respository/playlistRepository';
 const PlaylistController = {
 
     todasLasPlaylist: async (req, res) => {
-        const data = await PlaylistRepository.findAll().exec();
+        const data = await PlaylistRepository.findAll();
         if (Array.isArray(data) && data.length > 0)
             res.json(data);
         else
