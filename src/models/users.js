@@ -1,9 +1,27 @@
+import mongoose from 'mongoose';
+const { Schema } = mongoose;
 
-class User {
+const userSchema = new Schema({
+    id: Number,
+    name: String,
+    lastname: String,
+    username: String,
+    email: String,
+    pass: String
+})
 
-    constructor(id, username) {
+const User = mongoose.model('User', userSchema);
+
+
+/*class User {
+
+    constructor(id, name, lastname, username, email, pass) {
         this.id = id;
+        this.name = name;
+        this.lastname = lastname;
         this.username = username;
+        this.email = email;
+        this.pass = pass;
     }
 
 
@@ -12,43 +30,56 @@ class User {
 let users = [
     new User(1, 'Luis Miguel López'),
     new User(2, 'Ángel Naranjo')
-];
+];*/
+
+const emailExists = async (email) => {
+    const result = await User.countDocuments({ email: email }).exec();
+    return result > 0;
+
+}
 
 
 const userRepository = {
 
-    findAll() {
-        return users;
+    async findAll() {
+        const result =  await User.find({}).exec();
+        return result;
     },
-    findById(id) {
-        const posicion = indexOfPorId(id);
-        return posicion == -1 ? undefined : users[posicion];
+    async findById(id) {
+        /*let result = users.filter(user => user.id == id);
+        return Array.isArray(result) && result.length > 0 ? result[0] : undefined;*/
+        const result = await User.findById(id).exec();
+        return result != null ? result : undefined;
     },
 
     // Inserta un nuevo usuario y devuelve el usuario insertado
-    create(newUser) {
-        const lastId = users.length == 0 ? 0 : users[users.length-1].id;
-        const newId = lastId + 1;
-        const result = new User(newId, newUser.username);
-        users.push(result);
-        return result;
+    async create(newUser) {
+        const theUser = new User({
+            id : newUser.id,
+            name : newUser.name,
+            lastname : newUser.lastname,
+            username : newUser.username,
+            email: newUser.email,
+            pass : newUser.pass
+        });
+        const result = await theUser.save();
+        return result; // Posiblemente aquí nos interese implementar un DTO
     },
     // Actualiza un usuario identificado por su ID
-    updateById(id, modifiedUser) {
-        const posicionEncontrado = indexOfPorId(id)
-        if (posicionEncontrado != -1) {
-            users[posicionEncontrado].username = modifiedUser.username;
-        }
-        return posicionEncontrado != -1 ? users[posicionEncontrado] : undefined;
+    async updateById(id, modifiedUser) {
+        const userSaved = await User.findById(id);
+
+        if (userSaved != null) {
+            return await Object.assign(userSaved, modifiedUser).save();
+        } else
+            return undefined;
     },
     // Versión del anterior, en la que el ID va dentro del objeto usuario
     update(modifiedUser) {
         return this.update(modifiedUser.id, modifiedUser);
     }, 
-    delete(id) {
-        const posicionEncontrado = indexOfPorId(id);
-        if (posicionEncontrado != -1)
-            users.splice(posicionEncontrado, 1);
+    async delete(id) {
+        await User.findByIdAndRemove(id).exec();
     }
 
 }
@@ -56,5 +87,6 @@ const userRepository = {
 
 export  {
     User,
-    userRepository
+    userRepository,
+    emailExists
 }

@@ -40,7 +40,7 @@ app.use((req, res, next) => {
     models,
     // El "usuario actual". Ahora mismo simula que hayamos hecho un login
     // Más adelante, lo podremos conseguir de otra forma.
-    me: models.users.userRepository.findById(1)
+    // me: models.users.userRepository.findById(1)
   };
   next();
 });
@@ -48,7 +48,6 @@ app.use((req, res, next) => {
 
 // Configuración de las rutas.
 app.use('/users', routes.user);
-app.use('/post', routes.post);
 
 // Inicialización del servidor y conexión a base de datos
 
