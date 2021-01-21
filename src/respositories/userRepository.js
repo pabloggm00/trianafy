@@ -1,8 +1,8 @@
-import { User } from '../models/users.js'
+import { User } from '../models/users';
 
 let users = [
-    new User(1, 'Luis','Miguel López', 'luismiguel', 'luismi@email.com', '1234'),
-    new User(2, 'Ángel', 'Naranjo', 'angelnaranjo', 'angelnaranjo@email.com', '12345')
+    new User(1, 'Luis Miguel López'),
+    new User(2, 'Ángel Naranjo')
 ];
 
 
@@ -20,6 +20,5 @@ const userRepository = {
 
 
 export  {
-    users,
     userRepository
 }
