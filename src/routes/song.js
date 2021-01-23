@@ -7,10 +7,12 @@ router.get('/', SongController.todasLasCanciones);
 
 router.get('/:id', SongController.cancionPorId);
 
-/*router.post('/', PersonaController.nuevaPersona);
+router.post('/', SongController.nuevaCancion);
 
-router.put('/:id', PersonaController.editarPersona);
+router.put('/:id', SongController.editarCancion);
 
-router.delete('/:id', PersonaController.eliminarPersona);*/
+//router.delete('/:id', PersonaController.eliminarPersona);*/
+
+
 
 export default router;

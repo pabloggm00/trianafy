@@ -1,6 +1,9 @@
-import userController from './user';
-
+import UserController from './user';
+import auth from './auth';
+import SongController from './songController';
 
 export default {
-    userController
+    UserController,
+    auth,
+    SongController
 }

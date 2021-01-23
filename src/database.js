@@ -2,11 +2,10 @@ db.users.insert
 	(
 		{
 			"id" : 1,
-            "name" : "Martin",
-            "lastname" : "Gutierrez",
+            "fullname" : "Martin",
             "username" : "mgutierrez",
             "email": "mguti@email.com",
-            "pass" : "1234"
+            "pass" : "12345678"
 		}
     )
     

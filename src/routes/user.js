@@ -18,6 +18,8 @@ router.get('/:id',
 
 //router.post('/', UserController.nuevoUsuario);
 router.post('/', [
+        body('id').not().exists().withMessage('No es necesario que proporcione un ID; este se asignará automáticamente'),
+        body('fullname'),
         body('username').isLength({min: 5}).withMessage('La longitud mínima del nombre de usuario son 5 caracteres'),
         body('email')
             .isEmail()
@@ -29,13 +31,12 @@ router.post('/', [
                     return true;
                 }
             }),
-        body('id').not().exists().withMessage('No es necesario que proporcione un ID; este se asignará automáticamente')
     ],
     validar, 
     UserController.nuevoUsuario);
 
-router.put('/:id', UserController.editarUsuario);
+//router.put('/:id', UserController.editarUsuario);
 
-router.delete('/:id', UserController.eliminarUsuario)
+//router.delete('/:id', UserController.eliminarUsuario)
 
 export default router;

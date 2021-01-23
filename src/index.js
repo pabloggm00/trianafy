@@ -6,6 +6,7 @@ import bodyParser from "body-parser";
 import morgan from "morgan";
 import morganBody from "morgan-body";
 import mongoose from "mongoose";
+import passport from './services/passport';
 
 // Imports de componentes del API
 import models from './models';
@@ -27,6 +28,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('dev'))
 morganBody(app);
 
+app.use(passport.initialize());
 
 /*
   Este middleware nos permite añadir alguna información al contexto de cada petición,
@@ -50,6 +52,7 @@ app.use((req, res, next) => {
 app.use('/users', routes.user);
 app.use('/songs', routes.song);
 app.use('/playlist', routes.playlist);
+app.use('/auth', routes.auth);
 
 // Inicialización del servidor y conexión a base de datos
 

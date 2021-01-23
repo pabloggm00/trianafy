@@ -1,17 +1,33 @@
+import bcrypt from 'bcryptjs';
+import "dotenv/config";
 import mongoose from 'mongoose';
+
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
     id: Number,
-    name: String,
-    lastname: String,
+    fullname: String,
     username: String,
     email: String,
     pass: String
 })
 
+//const pass = bcrypt.hashSync('12345678', parseInt(process.env.BCRYPT_ROUNDS));
+
+
+
 const User = mongoose.model('User', userSchema);
 
+const emailExists = async (email) => {
+    const result = await User.countDocuments({ email: email }).exec();
+    return result > 0;
+
+}
+
+const usernameExists = (username) => {
+    let usernames = users.map(user => user.username);
+    return usernames.includes(username);
+}
 
 /*class User {
 
@@ -32,13 +48,9 @@ let users = [
     new User(2, 'Ángel Naranjo')
 ];*/
 
-const emailExists = async (email) => {
-    const result = await User.countDocuments({ email: email }).exec();
-    return result > 0;
-
-}
 
 
+/*
 const userRepository = {
 
     async findAll() {
@@ -48,7 +60,7 @@ const userRepository = {
     async findById(id) {
         /*let result = users.filter(user => user.id == id);
         return Array.isArray(result) && result.length > 0 ? result[0] : undefined;*/
-        const result = await User.findById(id).exec();
+        /*const result = await User.findById(id).exec();
         return result != null ? result : undefined;
     },
 
@@ -82,11 +94,11 @@ const userRepository = {
         await User.findByIdAndRemove(id).exec();
     }
 
-}
+}*/
 
 
 export  {
     User,
-    userRepository,
-    emailExists
+    emailExists,
+    usernameExists
 }

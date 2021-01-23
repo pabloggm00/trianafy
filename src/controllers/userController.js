@@ -1,13 +1,13 @@
 import {
     User,
-    userRepository
 } from '../models/users';
+import { UserRepository } from '../respository/userRepository';
 import { validationResult } from 'express-validator';
 
 const UserController = {
 
     todosLosUsuarios : async (req, res) => {
-        const data = await userRepository.findAll();
+        const data = await UserRepository.findAll();
         if (Array.isArray(data) && data.length > 0) 
             res.json(data);
         else
@@ -17,7 +17,7 @@ const UserController = {
     usuarioPorId : async (req, res) => {
 
         
-        let user = await userRepository.findById(req.params.id);
+        let user = await UserRepository.findById(req.params.id);
             if (user != undefined) {
                 res.json(user);
             } else {
@@ -33,7 +33,7 @@ const UserController = {
     nuevoUsuario : async (req, res) => {
         // let usuarioCreado = userRepository.create(new User(req.body.username, req.body.email));
         // Ya no tenemos la clase user para usarla así, tenemos que crear un simple objeto
-        let usuarioCreado = await userRepository.create({
+        let usuarioCreado = await UserRepository.create({
             id:req.body.id,
             name: req.body.name,
             lastname: req.body.lastname,
@@ -47,8 +47,11 @@ const UserController = {
     editarUsuario: async (req, res) => {
         // let usuarioModificado = userRepository.updateById(req.params.id, new User(undefined, req.body.username));
         // Ya no tenemos la clase user para usarla así, tenemos que crear un simple objeto
-        let usuarioModificado = await userRepository.updateById(req.params.id, {
-            username: req.body.username
+        let usuarioModificado = await UserRepository.updateById(req.params.id, {
+            fullname: req.body.fullname,
+            username: req.body.username,
+            email: req.body.email,
+            pass: req.body.pass
         });
         if (usuarioModificado == undefined)
             res.sendStatus(404);
@@ -57,7 +60,7 @@ const UserController = {
     },
 
     eliminarUsuario: async (req, res) => {
-        await userRepository.delete(req.params.id);
+        await UserRepository.delete(req.params.id);
         res.sendStatus(204);
     }
 
