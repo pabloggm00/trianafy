@@ -6,10 +6,16 @@ import { JwtService } from '../services/jwt';
 
 const AuthController = {
     
-    register:  (req, res, next) => {
-        let userCreated =  UserRepository.create(
-            new User(req.body.fullname, req.body.username, req.body.email, bcrypt.hashSync(req.body.pass, parseInt(process.env.BCRYPT_ROUNDS)))
-        );
+    register: async (req, res, next) => {
+        
+        let userCreated = await UserRepository.create({
+            fullname: req.body.fullname,
+            username: req.body.username,
+            email: req.body.email,
+            //pass: bcrypt.hashSync(req.body.pass, parseInt(process.env.BCRYPT_ROUNDS))
+            pass: req.body.pass
+        });
+   
 
         res.status(201).json({
             id: userCreated.id,
@@ -17,11 +23,12 @@ const AuthController = {
             username: userCreated.username,
             email: userCreated.email
         });
+    
     },
 
-    login:  (req, res, next) => {
+    login: async (req, res, next) => {
 
-        const token =  JwtService.sign(req.user);
+        const token = await JwtService.sign(req.user);
         res.status(201).json({
             user: req.user,
             token: token

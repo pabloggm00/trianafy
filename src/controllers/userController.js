@@ -34,9 +34,8 @@ const UserController = {
         // let usuarioCreado = userRepository.create(new User(req.body.username, req.body.email));
         // Ya no tenemos la clase user para usarla así, tenemos que crear un simple objeto
         let usuarioCreado = await UserRepository.create({
-            id:req.body.id,
-            name: req.body.name,
-            lastname: req.body.lastname,
+            //id:req.body.id,
+            fullname: req.body.fullname,
             username: req.body.username,
             email: req.body.email,
             pass: req.body.pass

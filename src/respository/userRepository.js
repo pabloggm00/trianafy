@@ -24,14 +24,14 @@ const UserRepository = {
     // Inserta un nuevo usuario y devuelve el usuario insertado
     async create(newUser) {
         const theUser = new User({
-            id : newUser.id,
+            //id : newUser.id,
             fullname: newUser.fullname,
             username : newUser.username,
             email: newUser.email,
             pass : newUser.pass
         });
         const result = await theUser.save();
-        return result.toDto(); // Posiblemente aquí nos interese implementar un DTO
+        return result; // Posiblemente aquí nos interese implementar un DTO
     },
     // Actualiza un usuario identificado por su ID
     /*async updateById(id, modifiedUser) {

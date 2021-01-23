@@ -7,7 +7,9 @@ import { password } from '../services/passport';
 
 const router = Router();
 
-router.post('/register', [
+router.post('/register', AuthController.register);
+
+/*router.post('/register', [
     body('fullname').exists(),
     body('username')
         .isLength({min: 5})
@@ -34,7 +36,7 @@ router.post('/register', [
         }),
     body('id').not().exists().withMessage('No es necesario un ID, se le adjudicará automáticamente')
 ], validar,
-AuthController.register);
+AuthController.register);*/
 
 router.post('/login', password(), AuthController.login);
 
