@@ -19,15 +19,5 @@ db.songs.insert({
 
 db.playlist.insert({
     "name" : "Favoritos",
-    "description" : "Mis canciones favoritas",
-    "user_id" : 1,
-    "songs" : [
-        {
-            "id" : 1,
-            "title" : "All Star",
-            "artist" : "Smash Mouth",
-            "album" : "All Star",
-            "year": "1999"
-        }
-    ]
+    "description" : "Mis canciones favoritas"
 })

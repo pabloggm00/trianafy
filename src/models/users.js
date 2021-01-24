@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
-    id: Number,
+    _id: Schema.Types.ObjectId, //poner _id
     fullname: String,
     username: String,
     email: String,
@@ -14,9 +14,16 @@ const userSchema = new Schema({
 
 //const pass = bcrypt.hashSync('12345678', parseInt(process.env.BCRYPT_ROUNDS));
 
-
-
 const User = mongoose.model('User', userSchema);
+
+/*const toDto = () => {
+    return {
+        id: this.id,
+        username: this.username, 
+        fullname: this.fullname,
+        email: this.email
+    }
+}*/
 
 const emailExists = async (email) => {
     const result = await User.countDocuments({ email: email }).exec();
@@ -24,8 +31,8 @@ const emailExists = async (email) => {
 
 }
 
-const usernameExists = (username) => {
-    let usernames = users.map(user => user.username);
+const usernameExists = async (username) => {
+    let usernames = await User.map(user => user.username);
     return usernames.includes(username);
 }
 
@@ -100,5 +107,6 @@ const userRepository = {
 export  {
     User,
     emailExists,
-    usernameExists
+    usernameExists,
+    //toDto
 }

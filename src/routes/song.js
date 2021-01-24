@@ -11,7 +11,7 @@ router.post('/', SongController.nuevaCancion);
 
 router.put('/:id', SongController.editarCancion);
 
-//router.delete('/:id', PersonaController.eliminarPersona);*/
+router.delete('/:id', SongController.eliminarCancion);
 
 
 

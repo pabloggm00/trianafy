@@ -1,5 +1,5 @@
 import { User } from '../models/users';
-
+import mongoose from 'mongoose';
 
 const UserRepository = {
 
@@ -24,7 +24,7 @@ const UserRepository = {
     // Inserta un nuevo usuario y devuelve el usuario insertado
     async create(newUser) {
         const theUser = new User({
-            //id : newUser.id,
+            _id : new mongoose.Types.ObjectId(),
             fullname: newUser.fullname,
             username : newUser.username,
             email: newUser.email,
@@ -45,10 +45,10 @@ const UserRepository = {
     // Versión del anterior, en la que el ID va dentro del objeto usuario
     update(modifiedUser) {
         return this.update(modifiedUser.id, modifiedUser);
-    }, 
+    }, */
     async delete(id) {
         await User.findByIdAndRemove(id).exec();
-    }*/
+    }
 
 }
 

@@ -1,4 +1,5 @@
 import { Song } from '../models/song';
+import mongoose from 'mongoose';
 
 const SongRepository = {
    
@@ -8,13 +9,13 @@ const SongRepository = {
 
     async findById(id){
         const result = await Song.findById(id).exec();
-        return resul != null ? result : undefined;
+        return result != null ? result : undefined;
     },
 
     // Inserta una nueva canción y la devuelve
     async create(newSong) {
         const theSong = new Song({
-            id : newSong.id,
+            _id :new mongoose.Types.ObjectId(),
             title : newSong.title,
             artist : newSong.artist,
             album : newSong.album,
@@ -31,6 +32,10 @@ const SongRepository = {
             return await Object.assign(songSaved, modifiedSong).save();
         } else
             return undefined;
+    },
+
+    async deleteSong(id) {
+        await Song.findByIdAndRemove(id).exec();
     }
 }
 

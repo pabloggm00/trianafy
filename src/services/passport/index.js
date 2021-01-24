@@ -2,22 +2,22 @@ import 'dotenv/config';
 import passport, { Passport } from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
-import { User } from '../../models/users';
+import { User, toDto } from '../../models/users';
 import { UserRepository } from '../../respository/userRepository';
 import bcrypt from 'bcryptjs';
 
-passport.use(new LocalStrategy({
+ passport.use( new LocalStrategy({
     usernameField: "username",
     passwordField: "pass",
     session: false
-}, (username, pass, done) => {
-    const user = UserRepository.findByUsername(username);
+}, async  (username, pass, done) => {
+    const user = await UserRepository.findByUsername(username);
     if (user == undefined)
-        return done(null, false)
+        return done(null, false);
     else if (!bcrypt.compareSync(pass, user.pass))
         return done(null, false);
     else
-        return done(null, user.toDto());
+        return done(null, user);
 }));
 
 const opts = {
@@ -49,7 +49,7 @@ export const password = () => (req, res, next) => passport.authenticate('local',
 
     req.logIn(user, {session:false}, (err) => {
         if (err){
-            console.log(err)
+            //console.log(err)
             return res.status(401).end()
         }
         next()

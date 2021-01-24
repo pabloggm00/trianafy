@@ -17,7 +17,7 @@ router.get('/:id',
     UserController.usuarioPorId);
 
 //router.post('/', UserController.nuevoUsuario);
-router.post('/', [
+/*router.post('/', [
         body('id').not().exists().withMessage('No es necesario que proporcione un ID; este se asignará automáticamente'),
         body('fullname'),
         body('username').isLength({min: 5}).withMessage('La longitud mínima del nombre de usuario son 5 caracteres'),
@@ -33,10 +33,10 @@ router.post('/', [
             }),
     ],
     validar, 
-    UserController.nuevoUsuario);
+    UserController.nuevoUsuario);*/
 
 //router.put('/:id', UserController.editarUsuario);
 
-//router.delete('/:id', UserController.eliminarUsuario)
+router.delete('/:id', UserController.eliminarUsuario)
 
 export default router;

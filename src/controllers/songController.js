@@ -1,4 +1,5 @@
 import { SongRepository } from '../respository/songRepository';
+import mongoose from 'mongoose';
 
 const SongController = {
 
@@ -12,7 +13,7 @@ const SongController = {
 
     cancionPorId: async (req,res) => {
         let song = await SongRepository.findById(req.params.id);
-        if (persona != undefined)
+        if (song != undefined)
             res.json(song);
         else
             res.sendStatus(404);
@@ -20,7 +21,7 @@ const SongController = {
 
     nuevaCancion: async (req, res) => {
         let cancionCreada = await SongRepository.create({
-            id:req.body.id,
+            _id:new mongoose.Types.ObjectId(),
             title: req.body.title,
             artist: req.body.artist,
             album: req.body.album,
@@ -41,8 +42,13 @@ const SongController = {
         if (cancionModificada == undefined)
             res.sendStatus(404);
         else
-            res.status(200).json(cancionModificada);
+            res.status(204).json(cancionModificada);
     },
+
+    eliminarCancion: async (req, res) => {
+        await SongRepository.deleteSong(req.params.id);
+        res.sendStatus(204);
+    }
 }
 
 

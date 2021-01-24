@@ -7,36 +7,36 @@ import { password } from '../services/passport';
 
 const router = Router();
 
-router.post('/register', AuthController.register);
+//router.post('/register', AuthController.register);
 
-/*router.post('/register', [
-    body('fullname').exists(),
+router.post('/register', [
+    
     body('username')
         .isLength({min: 5})
         .withMessage('La longitud mínima del nombre de usuario son 5 caracteres')
-        .custom(username => {
+        /*.custom(username => {
             if (usernameExists(username)){
                 throw new Error('El nombre de usuario ya existe')
             }else {
                 return true;
             }
-        }),
+        })*/,
     body('pass')
         .isLength({min: 8})
         .withMessage('La contraseña debe tener más de 8 caracteres'),
     body('email')
         .isEmail()
         .withMessage('El campo email debe ser un email válido')
-        .custom( email => {
+        /*.custom( email => {
             if ( emailExists(email)) {
                 throw new Error('El email ya está registrado')
             }else {
                 return true;
             }
-        }),
+        })*/,
     body('id').not().exists().withMessage('No es necesario un ID, se le adjudicará automáticamente')
 ], validar,
-AuthController.register);*/
+AuthController.register);
 
 router.post('/login', password(), AuthController.login);
 
