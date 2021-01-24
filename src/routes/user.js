@@ -7,8 +7,6 @@ const router = Router();
 
 router.get('/', UserController.todosLosUsuarios)
 
-router.get('/me', UserController.me);
-
 router.get('/:id', 
     /*[
         param('id').isInt().withMessage('ID debe ser un número entero')

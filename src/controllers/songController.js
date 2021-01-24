@@ -3,6 +3,9 @@ import mongoose from 'mongoose';
 
 const SongController = {
 
+
+    //GET
+
     todasLasCanciones: async (req,res) => {
         const data = await SongRepository.findAll();
         if ( Array.isArray(data) && data.length > 0)
@@ -19,6 +22,8 @@ const SongController = {
             res.sendStatus(404);
     },
 
+    //POST
+
     nuevaCancion: async (req, res) => {
         let cancionCreada = await SongRepository.create({
             _id:new mongoose.Types.ObjectId(),
@@ -29,6 +34,8 @@ const SongController = {
         })
         res.status(201).json(cancionCreada);
     },
+
+    //PUT
 
     editarCancion: async (req, res) => {
         // let usuarioModificado = userRepository.updateById(req.params.id, new User(undefined, req.body.username));
@@ -44,6 +51,8 @@ const SongController = {
         else
             res.status(204).json(cancionModificada);
     },
+
+    //DELETE
 
     eliminarCancion: async (req, res) => {
         await SongRepository.deleteSong(req.params.id);

@@ -6,6 +6,10 @@ import { validationResult } from 'express-validator';
 
 const UserController = {
 
+    //Para manejar fácil los usuarios, no pide para trabajo
+
+    //GET
+
     todosLosUsuarios : async (req, res) => {
         const data = await UserRepository.findAll();
         if (Array.isArray(data) && data.length > 0) 
@@ -26,9 +30,7 @@ const UserController = {
         
     },
 
-    me : (req, res) => {
-        res.json(req.context.me);
-    },
+    //POST
 
     nuevoUsuario : async (req, res) => {
         // let usuarioCreado = userRepository.create(new User(req.body.username, req.body.email));
@@ -42,6 +44,8 @@ const UserController = {
         })
         res.status(201).json(usuarioCreado);
     },
+
+    //PUT
 
     editarUsuario: async (req, res) => {
         // let usuarioModificado = userRepository.updateById(req.params.id, new User(undefined, req.body.username));
@@ -57,6 +61,8 @@ const UserController = {
         else
             res.status(200).json(usuarioModificado);
     },
+
+    //DELETE
 
     eliminarUsuario: async (req, res) => {
         await UserRepository.delete(req.params.id);

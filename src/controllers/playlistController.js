@@ -5,6 +5,8 @@ import mongoose from 'mongoose';
 
 const PlaylistController = {
 
+    //GET
+
     todasLasPlaylist: async (req, res) => {
         const data = await PlaylistRepository.findAll();
         if (Array.isArray(data) && data.length > 0)
@@ -21,6 +23,34 @@ const PlaylistController = {
             res.sendStatus(404);
     },
 
+    cancionesDePlaylist: async (req, res) => {
+        let playlist = await PlaylistRepository.findById(req.params.id);
+        if (playlist != undefined)
+            res.json(playlist.songs);
+        else
+            res.sendStatus(404);
+    },
+
+    unaCancionDePlaylist: async (req, res) => {
+        let playlist = await PlaylistRepository.findById(req.params.id_playlist);
+        if (playlist != undefined){
+            let song = await SongRepository.findById(req.params.id_song);
+            if (song != undefined){
+                res.json(song);
+            }else{
+                res.status(400).json({
+                    mensaje: `La canción con ID: ${req.params.id_song} no está registrada en la base de datos`
+                });
+            }
+        }else{
+             res.status(400).json({
+                    mensaje: `La playlist con ID: ${req.params.id_playlist} no está registrada en la base de datos`
+                });
+        }
+    },
+
+    //POST
+
     addPlaylist: async (req, res) => {
         let playlist = await PlaylistRepository.create({
             _id:new mongoose.Types.ObjectId(),
@@ -28,23 +58,6 @@ const PlaylistController = {
             description: req.body.description
         });
         res.status(201).json(playlist);
-    },
-
-    editPlaylist: async (req, res) => {
-        let nuevaPlaylist = await PlaylistRepository.updatePlaylist(req.params.id, {
-            name: req.body.name,
-            description: req.body.description
-        });
-
-        if (nuevaPlaylist == undefined)
-            res.sendStatus(404);
-        else
-            res.status(204).json(nuevaPlaylist);
-    },
-
-    deletePlaylist: async (req, res) => {
-        await PlaylistRepository.deletePlaylist(req.params.id);
-        res.sendStatus(204);
     },
 
     addSongPlaylist: async (req, res) => {
@@ -67,6 +80,29 @@ const PlaylistController = {
             });
         }
     },
+
+    //PUT
+
+    editPlaylist: async (req, res) => {
+        let nuevaPlaylist = await PlaylistRepository.updatePlaylist(req.params.id, {
+            name: req.body.name,
+            description: req.body.description
+        });
+
+        if (nuevaPlaylist == undefined)
+            res.sendStatus(404);
+        else
+            res.status(204).json(nuevaPlaylist);
+    },
+
+    //DELETE
+
+    deletePlaylist: async (req, res) => {
+        await PlaylistRepository.deletePlaylist(req.params.id);
+        res.sendStatus(204);
+    },
+
+    
 
     delSongPlaylist: async (req, res) => {
         let playlist = await PlaylistRepository.findById(req.params.id_playlist);

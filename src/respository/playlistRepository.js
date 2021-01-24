@@ -2,6 +2,8 @@ import { Playlist } from '../models/playlists';
 import mongoose from 'mongoose';
 const PlaylistRepository = {
 
+    //GET
+
     async findAll(){
         return await Playlist
             .find()
@@ -16,6 +18,8 @@ const PlaylistRepository = {
             .exec();
     },
 
+    //POST
+
     async create(newPlaylist) {
         const thePlaylist = new Playlist({
             _id : new mongoose.Types.ObjectId(),
@@ -26,6 +30,8 @@ const PlaylistRepository = {
         return result;
     },
 
+    //PUT
+
     async updatePlaylist(id, modifiedPlaylist) {
         const playlistSaved = await Playlist.findById(id);
 
@@ -35,6 +41,8 @@ const PlaylistRepository = {
             return undefined;
         }
     },
+
+    //DELETE
 
     async deletePlaylist(id) {
         await Playlist.findByIdAndRemove(id).exec();
