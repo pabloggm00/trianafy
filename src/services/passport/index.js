@@ -17,7 +17,7 @@ import bcrypt from 'bcryptjs';
     else if (!bcrypt.compareSync(pass, user.pass))
         return done(null, false);
     else
-        return done(null, user);
+        return done(null, user.toDto());
 }));
 
 const opts = {
