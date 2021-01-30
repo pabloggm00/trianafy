@@ -5,12 +5,13 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
-    _id: Schema.Types.ObjectId, //poner _id
+    _id: Schema.Types.ObjectId,
     fullname: String,
     username: String,
     email: String,
     pass:  String
 });
+
 
 const User = mongoose.model('User', userSchema);
 
@@ -40,5 +41,5 @@ export  {
     User,
     emailExists,
     usernameExists,
-    //toDto
+    toDto
 }
