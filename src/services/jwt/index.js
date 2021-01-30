@@ -11,6 +11,6 @@ export const JwtService = {
                                 algorithm: jwtAlgorithm, expiresIn: jwtLifetime
                             }),
 
-    verify: (token) => jwt.verify(token, secret)
+    verify: (token) => jwt.verify(token, secret) 
 
 }

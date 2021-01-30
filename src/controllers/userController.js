@@ -3,6 +3,7 @@ import {
 } from '../models/users';
 import { UserRepository } from '../respository/userRepository';
 import { validationResult } from 'express-validator';
+import mongoose from 'mongoose';
 
 const UserController = {
 
@@ -32,24 +33,27 @@ const UserController = {
 
     //POST
 
-    nuevoUsuario : async (req, res) => {
-        // let usuarioCreado = userRepository.create(new User(req.body.username, req.body.email));
-        // Ya no tenemos la clase user para usarla así, tenemos que crear un simple objeto
-        let usuarioCreado = await UserRepository.create({
+    /*nuevoUsuario : async (req, res) => {
+        
+        let userCreated = await UserRepository.create({
             _id:new mongoose.Types.ObjectId(),
             fullname: req.body.fullname,
             username: req.body.username,
             email: req.body.email,
             pass: req.body.pass
         })
-        res.status(201).json(usuarioCreado);
-    },
+        res.status(201).json({
+            _id: userCreated.id,
+            fullname: userCreated.fullname,
+            username: userCreated.username,
+            email: userCreated.email
+        });
+    },*/
 
     //PUT
 
     editarUsuario: async (req, res) => {
-        // let usuarioModificado = userRepository.updateById(req.params.id, new User(undefined, req.body.username));
-        // Ya no tenemos la clase user para usarla así, tenemos que crear un simple objeto
+       
         let usuarioModificado = await UserRepository.updateById(req.params.id, {
             fullname: req.body.fullname,
             username: req.body.username,

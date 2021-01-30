@@ -24,7 +24,8 @@ const PlaylistRepository = {
         const thePlaylist = new Playlist({
             _id : new mongoose.Types.ObjectId(),
             name: newPlaylist.name,
-            description : newPlaylist.description
+            description : newPlaylist.description,
+            user_id: newPlaylist.user_id
         });
         const result = await thePlaylist.save();
         return result;

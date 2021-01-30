@@ -36,7 +36,8 @@ const PlaylistController = {
         if (playlist != undefined){
             let song = await SongRepository.findById(req.params.id_song);
             if (song != undefined){
-                res.json(song);
+                let songEncontrada = playlist.songs.find(song => song._id == req.params.id_song) 
+                res.json(songEncontrada);
             }else{
                 res.status(400).json({
                     mensaje: `La canción con ID: ${req.params.id_song} no está registrada en la base de datos`
@@ -55,9 +56,11 @@ const PlaylistController = {
         let playlist = await PlaylistRepository.create({
             _id:new mongoose.Types.ObjectId(),
             name: req.body.name,
-            description: req.body.description
+            description: req.body.description,
+            user_id: await req.user
         });
-        res.status(201).json(playlist);
+
+        res.status(201).json(await PlaylistRepository.findById(playlist._id));
     },
 
     addSongPlaylist: async (req, res) => {

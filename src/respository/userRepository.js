@@ -8,8 +8,7 @@ const UserRepository = {
         return result;
     },
     async findById(id) {
-        /*let result = users.filter(user => user.id == id);
-        return Array.isArray(result) && result.length > 0 ? result[0] : undefined;*/
+      
         const result = await User.findById(id).exec();
         return result != null ? result : undefined;
     },
@@ -31,21 +30,9 @@ const UserRepository = {
             pass : newUser.pass
         });
         const result = await theUser.save();
-        return result; // Posiblemente aquí nos interese implementar un DTO
+        return result; 
     },
-    // Actualiza un usuario identificado por su ID
-    /*async updateById(id, modifiedUser) {
-        const userSaved = await User.findById(id);
-
-        if (userSaved != null) {
-            return await Object.assign(userSaved, modifiedUser).save();
-        } else
-            return undefined;
-    },
-    // Versión del anterior, en la que el ID va dentro del objeto usuario
-    update(modifiedUser) {
-        return this.update(modifiedUser.id, modifiedUser);
-    }, */
+    
     async delete(id) {
         await User.findByIdAndRemove(id).exec();
     }

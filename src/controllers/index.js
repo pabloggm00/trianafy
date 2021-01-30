@@ -1,9 +1,12 @@
 import UserController from './user';
-import auth from './auth';
+import AuthController from './auth';
 import SongController from './songController';
+import PlaylistController from './playlistController';
+
 
 export default {
     UserController,
-    auth,
-    SongController
+    AuthController,
+    SongController,
+    PlaylistController
 }

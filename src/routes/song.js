@@ -1,17 +1,18 @@
 import { Router } from 'express';
 import { SongController } from '../controllers/songController';
+import { token } from '../services/passport'
 
 const router = Router();
 
-router.get('/', SongController.todasLasCanciones);
+router.get('/', token(), SongController.todasLasCanciones);
 
-router.get('/:id', SongController.cancionPorId);
+router.get('/:id',token(), SongController.cancionPorId);
 
-router.post('/', SongController.nuevaCancion);
+router.post('/', token(), SongController.nuevaCancion);
 
-router.put('/:id', SongController.editarCancion);
+router.put('/:id', token(), SongController.editarCancion);
 
-router.delete('/:id', SongController.eliminarCancion);
+router.delete('/:id', token(), SongController.eliminarCancion);
 
 
 

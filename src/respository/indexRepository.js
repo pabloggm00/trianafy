@@ -1,5 +1,10 @@
-import { userRepository } from './userRepository';
+import { UserRepository } from './userRepository';
+import { PlaylistRepository } from './playlistRepository';
+import { SongRepository } from './songRepository';
+
 
 export default {
-    userRepository
+    UserRepository,
+    SongRepository,
+    PlaylistRepository
 }

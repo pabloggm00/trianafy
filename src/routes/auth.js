@@ -7,8 +7,6 @@ import { password } from '../services/passport';
 
 const router = Router();
 
-//router.post('/register', AuthController.register);
-
 router.post('/register', [
     
     body('username')

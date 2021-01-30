@@ -40,10 +40,8 @@ passport.use('token', new JwtStrategy(opts, (jwt_payload, done) => {
 
 export const password = () => (req, res, next) => passport.authenticate('local', {session: false}, (err, user, info) => {
     if (err){
-        console.log(err)
         return res.status(400).json(err)
-    }else if (err || !user){
-        console.log(err)
+    }else if (err || !user){        
         return res.status(401).end()
     }
 
@@ -52,6 +50,17 @@ export const password = () => (req, res, next) => passport.authenticate('local',
             //console.log(err)
             return res.status(401).end()
         }
+        next()
+    })
+})(req, res, next);
+
+export const token = () => (req, res, next) =>
+    passport.authenticate('token', { session: false }, (err, user, info) => {
+    if (err ||  !user) {
+        return res.status(401).end()
+    }
+    req.logIn(user, { session: false }, (err) => {
+        if (err) return res.status(401).end()
         next()
     })
 })(req, res, next);
